@@ -28,8 +28,8 @@ function connect(ip, port, cb) {
 				on: function(notification, cb) {
 					jrpc.onNotification(notification, connection_id, cb);
 				},
-				close: ws.close.bind(ws)
-				version: schema.version;
+				close: ws.close.bind(ws),
+				version: schema.version
 			};
 		} catch(e) {
 			cb(e);
