@@ -1,0 +1,23 @@
+{
+  "name": "xbmc-ws",
+  "version": "0.0.1",
+  "description": "A wrapper for the xbmc jsonrpc interface",
+  "main": "xbmc.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "xbmc",
+    "jsonrpc",
+    "json-rpc"
+  ],
+  "author": "Florian Albertz",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "ws": "~0.4.31",
+    "jrpc-schema": "0.0.1"
+  }
+}
