@@ -6,6 +6,8 @@ It should not be restricted to a specific version of xbmc, as it pulls all its i
 
 For a full usage example check the example.js file
 
+Install via `npm install xbmc-ws`
+
 
 Initiate
 --------
