@@ -1,8 +1,16 @@
-var jrpc = require('jrpc-schema');
+var jrpc = require('jrpc-schema')
 var Websocket = require('ws');
 
-function connect(ip, port, cb) {
-	var connection_id = 'ws://'+ip+':'+port+'/jsonrpc'
+//Create our connection
+function init(host, port) {
+	var queue = [];
+	var running = 0;
+	var closing = false;
+
+	var connection_id = 'ws://'+host+':'+port+'/jsonrpc';
+	var connection;
+
+	jrpc.onId('schemarequest', connection_id, gotSchema);
 
 	var ws = new Websocket(connection_id);
 
@@ -13,35 +21,89 @@ function connect(ip, port, cb) {
 		}
 	});
 
+	ws.on('open', getSchema);
+
+	//Return our new connection object
+	return {
+		on: on,
+		run: callMethod,
+		close: close
+	};
+
+	/**********************
+		Methods we need
+	**********************/
+
+	//Return a function to run our method
+	function callMethod(method) {
+		//Run or queue the message
+		return function runMethod() {
+			var params = Array.prototype.slice.call(arguments);
+
+			if(typeof params[params.length-1] === 'function') {
+				params[params.length-1] = wrapCallback(params[params.length-1]);
+			}
+
+			if(connection) {
+				connection[method].apply(connection, params);
+			} else {
+				queue.push({
+					method: method,
+					params: params
+				});
+			}
+		}
+	}
+
+	//Execute all pending requests
+	function executeQueue() {
+		var method;
+
+		if(connection) {
+			while(queue.length > 0) {
+				method = queue.shift();
+				connection.methods[method.method].apply(connection, method.params);
+			}
+		}
+	}
+
+	function close() {
+		if(running !== 0) {
+			closing = true;
+		} else if(ws) {
+			ws.close();
+		}
+	}
+
+	function wrapCallback(cb) {
+		running++;
+
+		return function() {
+			cb.apply(null, arguments);
+
+			running--;
+			if(closing) {
+				close();
+			}
+		}
+	}
 
 	//Get our schema once we have a connection
-	var getSchema = function() {
+	function getSchema() {
 		var json = jrpc.methodToJSON('JSONRPC.Introspect', [], 'schemarequest');
 		ws.send(json);
 	}
 
 	//Generate our jrpc methods from our schema
-	var gotSchema = function(schema) {
-		try {
-			xbmc = {
-				methods: jrpc.parse(schema, ws.send.bind(ws)).methods,
-				on: function(notification, cb) {
-					jrpc.onNotification(notification, connection_id, cb);
-				},
-				close: ws.close.bind(ws),
-				version: schema.version
-			};
-		} catch(e) {
-			cb(e);
-			return;
-		}
+	function gotSchema(schema) {
+		connection = jrpc.parse(schema, ws.send.bind(ws));
+		executeQueue();
+	}
 
-		cb(null, xbmc);
-	};
-
-	//After the socket is open, make sure we request the schema
-	ws.on('open', getSchema);
-	jrpc.onId('schemarequest', connection_id, gotSchema);
+	//Allow us to bind to a notification
+	function on(notification, cb) {
+		jrpc.onNotification(notification, connection_id, cb);
+	}
 }
 
-module.exports = connect;
+module.exports = init;
