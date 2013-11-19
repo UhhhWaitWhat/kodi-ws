@@ -10,38 +10,28 @@ For a full usage example check the example.js file
 Initiate
 --------
 	var xbmc = require('xbmc-ws');
-	xbmc('localhost', 9090, loaded);
-
-As we have to fetch info about the xbmc instance first, we have to assign a callback to our connecting function. This callback will then be called with an error if any as its first argument, and a connection object as its second.
-
-	function loaded(err, connection) {
-		if(err) throw err;
-		//Do something with our connection object
-	}
+	connection = xbmc('localhost', 9090);
 
 
 Connection Object
 -----------------
 
-### .version ###
-The version reported by `JSONRPC.Introspect`
-
 ### .close() ###
-Close our connection, so our program can exit
+Closes our connection, so our program can exit. If any queries are currently running, they will be finished first.
 
 ### .on(method, cb) ###
 Assigns a handler to a notfication sent by connection. The `cb` function will be passed a single argument containing the notifications data. `method` should be a string containing the notifications name.
 
-### .methods ###
-This object contains all of the methods we can send to connection. You can call them like so:
+### .run(method) ###
+Returns a function for the specified method name. This function takes parameters like so:
 
-	connection.methods['Application.SetMute'](true, handler);
+	connection.run('Application.SetMute')(true, handler);
 
 The handler argument is optional, but if it is supplied, it will be called with the result, as soon as the server responds.
 Multiple arguments can be passed either by order, or as an object by name:
 
-	connection.methods['VideoLibrary.GetMovies'](['title', 'rating', 'year'], {"start" : 0, "end": 2}, handler);
-	connection.methods['VideoLibrary.GetMovies'](
+	connection.run('VideoLibrary.GetMovies')(['title', 'rating', 'year'], {"start" : 0, "end": 2}, handler);
+	connection.methods('VideoLibrary.GetMovies')(
 		{
 			properties: ['title', 'rating', 'year'],
 			limits: {"start" : 0, "end": 2}
@@ -55,3 +45,5 @@ A handler takes an error as its first argument and the result as its second like
 
 		console.log('Movies:', result.movies);
 	}
+
+Methods called immediately after initiation are queued as we have to establish a connection and fetch the api info from xbmc first.
