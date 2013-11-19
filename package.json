@@ -1,6 +1,6 @@
 {
   "name": "xbmc-ws",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A wrapper for the xbmc jsonrpc interface",
   "main": "xbmc.js",
   "directories": {
@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "ws": "~0.4.31",
-    "jrpc-schema": "0.0.1"
+    "jrpc-schema": "0.0.3"
   }
 }
