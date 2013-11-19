@@ -8,6 +8,10 @@ For a full usage example check the example.js file
 
 Install via `npm install xbmc-ws`
 
+Use in Browser
+--------------
+To use the module in the browser, you can compile it by running `grunt` in the modules folder. This should generate a `compiled.js` file, which you can include in your website like any other javascript file. It adds a `xbmc` property to the `Window` object which you can use as you would use the required module. As this uses the browsers built-in websocket implementation, it will only work with a browser with a working websocket implementation (Firefox 6+, Chrome 14+, Safari 6+, Opera 12+ and IE 10+)
+
 
 Initiate
 --------
