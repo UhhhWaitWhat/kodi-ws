@@ -15,13 +15,13 @@ function init(host, port) {
 	var ws = new Websocket(connection_id);
 
 	//Bind our incoming messages to our jrpc handler
-	ws.on('message',  function(msg) {
-		if(typeof msg === 'string' && msg.length > 0) {
-			jrpc.handleResponse(connection_id, msg);
+	ws.onmessage = function(data) {
+		if(data.data.length>0) {
+			jrpc.handleResponse(connection_id, data.data);
 		}
-	});
+	}
 
-	ws.on('open', getSchema);
+	ws.onopen = getSchema;
 
 	//Return our new connection object
 	return {
