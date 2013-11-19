@@ -1,21 +1,20 @@
 var xbmc = require('../xbmc.js');
+var connection = xbmc('192.111.111.106', 9090);
 
-xbmc('192.111.111.106', 9090, loaded);
+//Bind a handler to the onvolumechange notification
+connection.on('Application.OnVolumeChanged', volume);
 
-function loaded(err, xbmc) {
-	if(err) throw err;
+//Toggle mute state to show that notifications work
+connection.run('Application.SetMute')(true);
+connection.run('Application.SetMute')(false);
 
-	//Attach a callback to a notification
-	xbmc.on('Application.OnVolumeChanged', volume);
+//Request 10 movies
+connection.run('VideoLibrary.GetMovies')(['title', 'rating', 'year'], {start: 0, end: 5}, {method: 'rating', order: 'descending'}, movies);
 
-	//Toggle mute state to show that notifications work
-	xbmc.methods['Application.SetMute'](true);
-	xbmc.methods['Application.SetMute'](false);
+//Finally close our connection
+connection.close();
 
-	//Request 10 movies
-	xbmc.methods['VideoLibrary.GetMovies'](['title', 'rating', 'year'], {"start" : 0, "end": 2}, movies.bind(xbmc));
-}
-
+//Output our volume
 function volume(data) {
 	console.log('Volume Change')
 	console.log('-------------')
@@ -23,6 +22,7 @@ function volume(data) {
 	console.log('Mute State is:', data.data.muted, '\n');
 }
 
+//Output our movies
 function movies(err, result) {
 	var x;
 	if(err) throw err;
@@ -36,6 +36,4 @@ function movies(err, result) {
 		console.log('  '+'Rating:        '+ result.movies[x].rating.toFixed(1));
 		console.log('  '+'Year:         '+ result.movies[x].year);
 	}
-
-	this.close();
 }
