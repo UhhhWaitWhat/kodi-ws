@@ -45,7 +45,7 @@ function init(host, port) {
 			}
 
 			if(connection) {
-				connection[method].apply(connection, params);
+				connection.methods[method].apply(connection, params);
 			} else {
 				queue.push({
 					method: method,
