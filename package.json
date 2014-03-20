@@ -15,8 +15,8 @@
     "json-rpc"
   ],
   "author": [
-	"Florian Albertz",
-	"Links 2004"
+	{ name: "Florian Albertz", url: "https://github.com/Paulavery/xbmc-ws.git" },
+	{ name: "Links 2004", url: "https://github.com/Links2004/xbmc-ws.git" }
   ],
   "license": "BSD-2-Clause",
   "repository": {
