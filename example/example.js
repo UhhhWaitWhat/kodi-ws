@@ -37,3 +37,29 @@ function movies(err, result) {
 		console.log('  '+'Year:         '+ result.movies[x].year);
 	}
 }
+
+function xbmc_reg_notifications(name) {
+	connection.on(name, function xbmc_notifications(data) {
+		console.info(name);
+		console.debug(data.data);
+	});
+}
+
+xbmc_reg_notifications('Application.OnVolumeChanged');	
+
+xbmc_reg_notifications('Player.OnPause');
+xbmc_reg_notifications('Player.OnPlay');
+xbmc_reg_notifications('Player.OnPropertyChanged');
+xbmc_reg_notifications('Player.OnSeek');
+xbmc_reg_notifications('Player.OnSpeedChanged');
+xbmc_reg_notifications('Player.OnStop');
+
+xbmc_reg_notifications('Playlist.OnAdd');
+xbmc_reg_notifications('Playlist.OnClear');
+xbmc_reg_notifications('Playlist.OnRemove');
+
+xbmc_reg_notifications('System.OnLowBattery');
+xbmc_reg_notifications('System.OnQuit');
+xbmc_reg_notifications('System.OnRestart');
+xbmc_reg_notifications('System.OnSleep');
+xbmc_reg_notifications('System.OnWake');

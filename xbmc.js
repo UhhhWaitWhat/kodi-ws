@@ -17,7 +17,11 @@ function init(host, port) {
 	//Bind our incoming messages to our jrpc handler
 	ws.onmessage = function(data) {
 		if(data.data.length>0) {
-			jrpc.handleResponse(connection_id, data.data);
+			try {
+				jrpc.handleResponse(connection_id, data.data);
+			} catch (e) {
+				console.error(e);
+			}
 		}
 	}
 
