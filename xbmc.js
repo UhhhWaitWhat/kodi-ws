@@ -15,18 +15,29 @@ function init(host, port) {
 	var ws = new Websocket(connection_id);
 
 	//Bind our incoming messages to our jrpc handler
-	ws.onmessage = function(data) {
-		if(data.data.length>0) {
-			try {
-				jrpc.handleResponse(connection_id, data.data);
-			} catch (e) {
-				console.error(e);
+	try {
+		ws.onmessage = function(data) {
+			if(data.data.length>0) {
+				try {
+					jrpc.handleResponse(connection_id, data.data);
+				} catch (e) {
+					console.error(e);
+					closing = true;
+				}
 			}
 		}
+		
+		ws.onopen = getSchema;
+	} catch (e) {
+		console.error(e);
+		closing = true;
 	}
-
-	ws.onopen = getSchema;
-
+	
+	ws.on('error', function(error) {
+		console.error(error);
+	});
+	
+	
 	//Return our new connection object
 	return {
 		on: on,
@@ -95,7 +106,11 @@ function init(host, port) {
 	//Get our schema once we have a connection
 	function getSchema() {
 		var json = jrpc.methodToJSON('JSONRPC.Introspect', [], 'schemarequest');
-		ws.send(json);
+		ws.send(json, function(error) {
+			if(error) {
+				console.error(error);
+			}
+		});
 	}
 
 	//Generate our jrpc methods from our schema
