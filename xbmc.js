@@ -45,7 +45,6 @@ function init(host, port) {
 						events.emit('error', e);
 						console.error(e);
 						closing = true;
-					
 					}
 				}
 			}
