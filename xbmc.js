@@ -1,5 +1,6 @@
 var jrpc = require('jrpc-schema')
 var Websocket = require('ws');
+var EventEmitter = require('events').EventEmitter;
 
 //Create our connection
 function init(host, port) {
@@ -9,31 +10,61 @@ function init(host, port) {
 
 	var connection_id = 'ws://'+host+':'+port+'/jsonrpc';
 	var connection;
+	
+	var events = new EventEmitter();
 
 	jrpc.onId('schemarequest', connection_id, gotSchema);
 
-	var ws = new Websocket(connection_id);
-
-	//Bind our incoming messages to our jrpc handler
-	ws.onmessage = function(data) {
-		if(data.data.length>0) {
-			jrpc.handleResponse(connection_id, data.data);
-		}
-	}
-
-	ws.onopen = getSchema;
-
+	var ws;
+	
 	//Return our new connection object
 	return {
+		init: _init,
 		on: on,
 		run: callMethod,
-		close: close
+		close: close,
+		events: events
 	};
 
 	/**********************
 		Methods we need
 	**********************/
 
+	
+	
+	function _init() {
+		ws = new Websocket(connection_id);
+
+		//Bind our incoming messages to our jrpc handler
+		try {
+			ws.onmessage = function(data) {
+				if(data.data.length>0) {
+					try {
+						jrpc.handleResponse(connection_id, data.data);
+					} catch (e) {
+						events.emit('error', e);
+						console.error(e);
+						closing = true;
+					}
+				}
+			}
+			
+			ws.onopen = getSchema;
+			events.emit('connection');
+		} catch (e) {
+			events.emit('error', error);
+			closing = true;
+			close();
+		}
+		
+		ws.on('error', function(error) {
+			events.emit('error', error);
+			closing = true;
+			close();
+		});
+		
+	}
+	
 	//Return a function to run our method
 	function callMethod(method) {
 		//Run or queue the message
@@ -72,6 +103,7 @@ function init(host, port) {
 			closing = true;
 		} else if(ws) {
 			ws.close();
+			events.emit('close');
 		}
 	}
 
@@ -91,7 +123,13 @@ function init(host, port) {
 	//Get our schema once we have a connection
 	function getSchema() {
 		var json = jrpc.methodToJSON('JSONRPC.Introspect', [], 'schemarequest');
-		ws.send(json);
+		ws.send(json, function(error) {
+			if(error) {
+				events.emit('error', error);
+				closing = true;
+				close();
+			}
+		});
 	}
 
 	//Generate our jrpc methods from our schema
