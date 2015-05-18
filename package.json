@@ -1,35 +1,48 @@
 {
   "name": "xbmc-ws",
   "version": "1.1.3",
+  "main": "lib/xbmc-ws.js",
+  "author": "Florian Albertz",
+  "contributors": ["Links 2004"],
+  "license": "BSD-3-Clause",
   "description": "A wrapper for the xbmc jsonrpc interface",
-  "main": "xbmc.js",
-  "directories": {
-    "example": "example"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaulAvery/node-xbmc-ws.git"
   },
   "keywords": [
     "xbmc",
     "jsonrpc",
     "json-rpc"
   ],
-  "author": [
-	{ name: "Florian Albertz", url: "https://github.com/Paulavery/xbmc-ws.git" },
-	{ name: "Links 2004", url: "https://github.com/Links2004/xbmc-ws.git" }
-  ],
-  "license": "BSD-2-Clause",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Paulavery/xbmc-ws.git"
+  "scripts": {
+    "prepublish": "make lint"
   },
   "dependencies": {
     "ws": "~0.4.31",
     "jrpc-schema": "0.0.3"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-browserify": "~1.2.11",
-    "grunt-contrib-uglify": "~0.2.7"
+    "eslint": "^0.18.0",
+    "version-bump": "^0.1.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "curly": [
+        2,
+        "multi-line"
+      ],
+      "quotes": [
+        2,
+        "single"
+      ]
+    },
+    "ecmaFeatures": {
+      "modules": true
+    }
   }
 }
