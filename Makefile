@@ -3,13 +3,13 @@ BIN = ./node_modules/.bin
 lint:
 	@$(BIN)/eslint lib
 
-release-major: test
+release-major: lint
 	@$(BIN)/bump --major
 
-release-minor: test
+release-minor: lint
 	@$(BIN)/bump --minor
 
-release-patch: test
+release-patch: lint
 	@$(BIN)/bump --patch
 
 publish:
