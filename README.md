@@ -61,12 +61,12 @@ The method returns a promise, which will be fulfilled as soon as the server resp
 Multiple arguments can be passed either by order, or as an object by name:
 
 ```js
-var movies = connection.runVideoLibrary.GetMovies(['title', 'rating', 'year'], {"start" : 0, "end": 2});
+var movies = connection.VideoLibrary.GetMovies(['title', 'rating', 'year'], {"start" : 0, "end": 2});
 ```
 
 **Arguments by name:**
 ```js
-var movies = connection.methods('VideoLibrary.GetMovies')({
+var movies = connection.VideoLibrary.GetMovies({
 	properties: ['title', 'rating', 'year'],
 	limits: {"start" : 0, "end": 2}
 });
