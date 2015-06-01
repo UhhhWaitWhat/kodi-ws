@@ -1,6 +1,6 @@
 {
   "name": "xbmc-ws",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "lib/xbmc-ws.js",
   "author": "Florian Albertz",
   "contributors": [
