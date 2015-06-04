@@ -24,7 +24,8 @@
     "has-value": "^0.2.0",
     "jrpc-schema": "^1.1.0",
     "set-value": "^0.2.0",
-    "ws": "~0.4.31"
+    "ws": "~0.4.31",
+    "bluebird":"latest"
   },
   "devDependencies": {
     "eslint": "^0.18.0",
