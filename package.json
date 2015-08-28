@@ -1,19 +1,20 @@
 {
-  "name": "xbmc-ws",
+  "name": "kodi-ws",
   "version": "2.1.2",
-  "main": "lib/xbmc-ws.js",
+  "main": "lib/kodi-ws.js",
   "author": "Florian Albertz",
   "contributors": [
-    "Links 2004"
+    "Links 2004",
+    "Bram van Oploo"
   ],
   "license": "BSD-3-Clause",
-  "description": "A wrapper for the xbmc jsonrpc interface",
+  "description": "A wrapper for the kodi jsonrpc interface",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PaulAvery/node-xbmc-ws.git"
+    "url": "https://github.com/PaulAvery/kodi-ws.git"
   },
   "keywords": [
-    "xbmc",
+    "kodi",
     "jsonrpc",
     "json-rpc"
   ],
@@ -24,10 +25,10 @@
     "has-value": "^0.2.0",
     "jrpc-schema": "^1.1.0",
     "set-value": "^0.2.0",
-    "ws": "~0.4.31"
+    "ws": "^0.7.1"
   },
   "devDependencies": {
-    "eslint": "^0.18.0",
+    "eslint": "^1.2.1",
     "version-bump": "^0.1.0"
   },
   "eslintConfig": {
