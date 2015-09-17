@@ -29,7 +29,7 @@ Emitted if the underlying socket is closed.
 
 ### Methods
 
-#### .notification(method, cb) ###
+#### .notification(method, cb)
 Assigns a handler to a notfication sent by connection. The `cb` function will be passed a single argument containing the notifications data. `method` should be a string containing the notifications name.
 
 ```js
@@ -45,7 +45,7 @@ connection.Player.OnPause(function() {
 })
 ```
 
-#### .run(method, args...) ###
+#### .run(method, args...)
 Runs the specified method. This function can be passed Parameters:
 
 ```js
@@ -70,4 +70,41 @@ var movies = connection.VideoLibrary.GetMovies({
 	properties: ['title', 'rating', 'year'],
 	limits: {"start" : 0, "end": 2}
 });
+```
+
+##### Batch Requests
+You can send batch requests like so:
+
+```js
+var batch = connection.batch();
+
+var movies = batch.VideoLibrary.GetMovies({properties: ['title']});
+var shows = batch.VideoLibrary.GetTVShows({properties: ['title']});
+
+batch.send();
+
+Promise.all([movies, shows]).then(function(data) {
+	/* Movies */
+	console.log(data[0]);
+	/* TVShows */
+	console.log(data[1]);
+});
+```
+
+Notice the `Promise.all()` is optional and used here to have simpler sample code.
+
+## Await/Async Example
+And just for good measure an example which uses ES7 `async` functions.
+
+```js
+let kodi = require('kodi-ws')('localhost', 9090);
+
+async function doStuff() {
+	let con = await kodi;
+
+	console.log(await con.VideoLibrary.GetMovies({properties: ['title']}));
+	console.log(await con.VideoLibrary.GetTVShows({properties: ['title']}));
+}
+
+doStuff().catch(e => console.error(e));
 ```
