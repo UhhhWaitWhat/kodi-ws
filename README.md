@@ -108,3 +108,12 @@ async function doStuff() {
 
 doStuff().catch(e => console.error(e));
 ```
+
+## More examples
+
+Look for more examples in [examples dir] (https://github.com/PaulAvery/kodi-ws/tree/master/examples): 
+
+## Kodi's JSON-RPC API
+
+Take a look at official documentation about JSON-RCP API [here] (http://kodi.wiki/view/JSON-RPC_API)
+As a example, full list of available commands (for protocol version 6) can be found here: [JSON-RPC_API v6] (http://kodi.wiki/view/JSON-RPC_API/v6)
