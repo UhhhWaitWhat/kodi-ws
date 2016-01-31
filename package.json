@@ -1,6 +1,6 @@
 {
   "name": "kodi-ws",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "main": "lib/kodi-ws.js",
   "author": "Florian Albertz",
   "contributors": [
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "has-value": "^0.2.0",
-    "jrpc-schema": "^2.0.0",
+    "jrpc-schema": "git+https://github.com/estbeetoo/jrpc-schema",
     "set-value": "^0.2.0",
     "ws": "^0.7.1"
   },
