@@ -1,13 +1,10 @@
-KODI JSON-RPC Websocket client
-==============================
-
+# KODI JSON-RPC Websocket client
 This module provides a simple way to communicate with an [Kodi](http://kodi.tv) media center installation.
 It should not be restricted to a specific version of kodi, as it pulls all its information about the available methods from `JSONRPC.Introspect`.
 
 Install via `npm install kodi-ws`
 
-Initiate
---------
+## Initiate
 ```js
 var kodi = require('kodi-ws');
 
@@ -16,8 +13,7 @@ kodi('localhost', 9090).then(function(connection) {
 });
 ```
 
-Connection Object
------------------
+## Connection Object
 ### Events
 The connection object emits the following events:
 
@@ -110,10 +106,7 @@ doStuff().catch(e => console.error(e));
 ```
 
 ## More examples
-
-Look for more examples in [examples dir] (https://github.com/PaulAvery/kodi-ws/tree/master/examples): 
+Look for more examples in the [examples](examples) directory.
 
 ## Kodi's JSON-RPC API
-
-Take a look at official documentation about JSON-RCP API [here] (http://kodi.wiki/view/JSON-RPC_API)
-As a example, full list of available commands (for protocol version 6) can be found here: [JSON-RPC_API v6] (http://kodi.wiki/view/JSON-RPC_API/v6)
+You can find kodi's official documentation of the JSON-RCP API [here](http://kodi.wiki/view/JSON-RPC_API) and the full list of available commands (for protocol version 6) [here](http://kodi.wiki/view/JSON-RPC_API/v6).

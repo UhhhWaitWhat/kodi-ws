@@ -1,7 +1,7 @@
 BIN = ./node_modules/.bin
 
 lint:
-	@$(BIN)/eslint lib
+	@$(BIN)/eslint lib example
 
 release-major: lint
 	@$(BIN)/bump --major
