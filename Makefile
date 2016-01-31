@@ -4,14 +4,14 @@ lint:
 	@$(BIN)/eslint lib example
 
 release-major: lint
-	@$(BIN)/bump --major
+	@npm version major
 
 release-minor: lint
-	@$(BIN)/bump --minor
+	@npm version minor
 
 release-patch: lint
-	@$(BIN)/bump --patch
+	@npm version patch
 
-publish:
+publish: lint
 	git push --tags origin HEAD:master
 	npm publish

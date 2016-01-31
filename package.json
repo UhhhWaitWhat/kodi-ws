@@ -19,7 +19,7 @@
     "json-rpc"
   ],
   "scripts": {
-    "prepublish": "make lint"
+    "test": "make lint"
   },
   "dependencies": {
     "has-value": "^0.2.0",
@@ -28,26 +28,6 @@
     "ws": "^0.7.1"
   },
   "devDependencies": {
-    "eslint": "^1.2.1",
-    "version-bump": "^0.1.0"
-  },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true
-    },
-    "rules": {
-      "curly": [
-        2,
-        "multi-line"
-      ],
-      "quotes": [
-        2,
-        "single"
-      ]
-    },
-    "ecmaFeatures": {
-      "modules": true
-    }
+    "eslint": "^1.9.0"
   }
 }
