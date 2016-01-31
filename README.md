@@ -18,13 +18,12 @@ kodi('localhost', 9090).then(function(connection) {
 The connection object emits the following events:
 
 #### error
-Emitted whenever the underlying websocket throws an error.
+Emitted whenever the underlying websocket throws an error or a server response cannot be parsed.
 
 #### close
 Emitted if the underlying socket is closed.
 
 ### Methods
-
 #### .notification(method, cb)
 Assigns a handler to a notfication sent by connection. The `cb` function will be passed a single argument containing the notifications data. `method` should be a string containing the notifications name.
 
