@@ -24,7 +24,7 @@
   "dependencies": {
     "babel-eslint": "^5.0.0-beta8",
     "has-value": "^0.2.0",
-    "jrpc-schema": "^2.0.0",
+    "jrpc-schema": "^2.1.0",
     "set-value": "^0.2.0",
     "ws": "^0.7.1"
   },
