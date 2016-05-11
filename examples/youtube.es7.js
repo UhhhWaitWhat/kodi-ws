@@ -30,7 +30,7 @@ async function main() {
 	const con = await kodi('127.0.0.1', 9090);
 
 	/* Stop all players, then start the video */
-	await stopAllActivePlayers();
+	await stopAllActivePlayers(con);
 	await con.Player.Open({
 		item: {
 			file: url
@@ -39,7 +39,7 @@ async function main() {
 
 	/* Stop the video after 20 seconds */
 	await sleep(20000);
-	await stopAllActivePlayers();
+	await stopAllActivePlayers(con);
 }
 
 /* Run the thing */
